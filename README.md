@@ -1,4 +1,34 @@
-# Workspace
+# Angular Interceptors
+
+## Installation
+
+```bash
+npm install -D ngx-interceptors
+```
+
+## Setup
+
+Simply import the interceptors as normal, ensuring that you have an existing AuthService which will fetch API tokens from local storage.
+
+Add the following to the app.module providers. ConfigService is simply a class that holds the values of the environment. It can be
+a class or an object. As long as config.api is present as the TokenInterceptor will use the API env variable to prefix requests.
+
+```typescript
+providers: [
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TokenInterceptor,
+        deps: [AuthService, ConfigService, Router],
+        multi: true,
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: NotificationInterceptor,
+        deps: [ToastrService],
+        multi: true,
+    },
+];
+```
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
 
